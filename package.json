@@ -2,7 +2,7 @@
   "dependencies": {
     "node-telegram-bot-api": "^0.54.0"
   },
-  "name": "chili_bot",
+  "name": "chilibot",
   "version": "1.0.0",
   "description": "my first test bot",
   "main": "main.js",
@@ -11,5 +11,14 @@
     "start": "node ./main.js"
   },
   "author": "Anton Fomin",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antonio63963/telegam_bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/antonio63963/telegam_bot/issues"
+  },
+  "homepage": "https://github.com/antonio63963/telegam_bot#readme"
 }

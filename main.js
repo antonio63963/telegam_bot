@@ -20,7 +20,13 @@ bot.on('message', (msg) => {
       .catch((error) => console.log(error))
   }
   else {
-    bot.sendMessage(id, debuger(msg))
+    const html = `
+    <strong>Test title</strong>
+    <pre>${debuger(msg)}</pre>
+    `
+    bot.sendMessage(id, html, {
+      parse_mode: 'HTML'
+    })
   }
   
 })
