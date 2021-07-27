@@ -53,5 +53,10 @@ console.log(query.message);
     case 'forward':
     bot.forwardMessage(chat.id, chat.id, message_id)  
     break;
+
+    case 'reply': 
+    bot.sendMessage(chat.id, 'my reply', {
+      reply_to_message_id: message_id
+    })
   }
 })
