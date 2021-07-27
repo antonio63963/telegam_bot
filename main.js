@@ -30,42 +30,77 @@ const bot = new TelegramBot(TOKEN, {
 //   }
   
 // })
-// function debuger(obj) {
-//   return JSON.stringify(obj, null, 4)
-// }
-bot.on('message', (msg) => {
-  const {id} = msg.chat;
-  console.log(msg);
-  if(msg.text == 'Закрыть') {
-    bot.sendMessage(id, 'close keyboard', {
-      reply_markup: {
-        remove_keyboard: true
-      }
-    })
-  } else if(msg.text === 'Ответить') {
-    bot.sendMessage(id, 'my reply', {
-      reply_markup: {
-        force_reply: true
-      }
-    })
-  } else {
-    bot.sendMessage(id, 'keyboard', {
-      reply_markup: {
-        keyboard: [
-          [{
-            text: 'отправить местоположение',
-            request_location:true
-          }],
-          ['Ответить', 'Закрыть'],
-          [{
-            text: 'Отправить контакт',
-            request_contact: true
-          }]
-        ],
-        one_time_keyboard: true
-      }
-    })
-  }
+function debuger(obj) {
+  return JSON.stringify(obj, null, 4)
+}
+
+// // ======Keyboard==========
+// bot.on('message', (msg) => {
+//   const {id} = msg.chat;
+//   console.log(msg);
+//   if(msg.text == 'Закрыть') {
+//     bot.sendMessage(id, 'close keyboard', {
+//       reply_markup: {
+//         remove_keyboard: true
+//       }
+//     })
+//   } else if(msg.text === 'Ответить') {
+//     bot.sendMessage(id, 'my reply', {
+//       reply_markup: {
+//         force_reply: true
+//       }
+//     })
+//   } else {
+//     bot.sendMessage(id, 'keyboard', {
+//       reply_markup: {
+//         keyboard: [
+//           [{
+//             text: 'отправить местоположение',
+//             request_location:true
+//           }],
+//           ['Ответить', 'Закрыть'],
+//           [{
+//             text: 'Отправить контакт',
+//             request_contact: true
+//           }]
+//         ],
+//         one_time_keyboard: true
+//       }
+//     })
+//   }
 
 
+// })
+
+//========inline Keyboard ============
+
+bot.on('message', msg => {
+  const { id } = msg.chat;
+
+  bot.sendMessage(id, 'inline keyboard', {
+    reply_markup: {
+      inline_keyboard: [
+        [{
+          text: 'Google',
+          url: `https://google.com`
+        }],
+        [
+          {
+            text: 'Reply',
+            callback_data: 'reply'
+          },
+          {
+            text: 'Test',
+            callback_data: 'test data'
+          }
+        ]
+      ]
+    }
+  });
+
+})
+bot.on('callback_query', query => {
+
+  
+  bot.answerCallbackQuery(query.id, 'wow')
 })
