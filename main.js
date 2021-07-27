@@ -1,4 +1,5 @@
 const TelegramBot = require('node-telegram-bot-api');
+const debug = require('./debug');
 const TOKEN = '1926993187:AAHlWMMBfl7gfE_1GBQzgvUn7RfU2id4sjU';
 
 const bot = new TelegramBot(TOKEN, {
@@ -9,98 +10,48 @@ const bot = new TelegramBot(TOKEN, {
       timeout: 10
     }
   }
-})
-// bot.on('message', (msg) => {
-//   console.log(msg.text);
-//   const { id } = msg.chat;
-//   const text = msg.text.toLowerCase();
-//   if(text == 'help') {
-//     bot.sendMessage(id, 'i will help you!')
-//       .then(() => console.log('sms has been send'))
-//       .catch((error) => console.log(error))
-//   }
-//   else {
-//     const html = `
-//     <strong>Test title</strong>
-//     <pre>${debuger(msg)}</pre>
-//     `
-//     bot.sendMessage(id, html, {
-//       parse_mode: 'HTML'
-//     })
-//   }
-  
-// })
-function debuger(obj) {
-  return JSON.stringify(obj, null, 4)
-}
+});
 
-// // ======Keyboard==========
-// bot.on('message', (msg) => {
-//   const {id} = msg.chat;
-//   console.log(msg);
-//   if(msg.text == 'Закрыть') {
-//     bot.sendMessage(id, 'close keyboard', {
-//       reply_markup: {
-//         remove_keyboard: true
-//       }
-//     })
-//   } else if(msg.text === 'Ответить') {
-//     bot.sendMessage(id, 'my reply', {
-//       reply_markup: {
-//         force_reply: true
-//       }
-//     })
-//   } else {
-//     bot.sendMessage(id, 'keyboard', {
-//       reply_markup: {
-//         keyboard: [
-//           [{
-//             text: 'отправить местоположение',
-//             request_location:true
-//           }],
-//           ['Ответить', 'Закрыть'],
-//           [{
-//             text: 'Отправить контакт',
-//             request_contact: true
-//           }]
-//         ],
-//         one_time_keyboard: true
-//       }
-//     })
-//   }
-
-
-// })
-
-//========inline Keyboard ============
-
-bot.on('message', msg => {
-  const { id } = msg.chat;
-
-  bot.sendMessage(id, 'inline keyboard', {
-    reply_markup: {
-      inline_keyboard: [
-        [{
-          text: 'Google',
-          url: `https://google.com`
-        }],
-        [
-          {
-            text: 'Reply',
-            callback_data: 'reply'
-          },
-          {
-            text: 'Test',
-            callback_data: 'test data'
-          }
-        ]
-      ]
+const inline_keyboard = [
+  [
+    {
+      text: 'Forward',
+      callback_data: 'forward'
+    },
+    {
+      text: 'Reply',
+      callback_data: 'reply'
     }
-  });
+  ],
+  [
+    {
+      text: 'Edit',
+      callback_data: 'edit'
+    }
+  ],
+  [
+    {
+      text: 'Delete',
+      callback_data: 'delete'
+    }
+  ]
+];
 
-})
+bot.onText(/\/start/, msg => {
+  const { id } = msg.chat;
+  bot.sendMessage(id, 'select', {
+    reply_markup: {
+      inline_keyboard
+    }
+  })
+});
+
 bot.on('callback_query', query => {
-
-  
-  bot.answerCallbackQuery(query.id, 'wow')
+  const {chat, message_id, text} = query.message;
+console.log(query.message);
+  switch(query.data) {
+    case 'forward':
+    bot.forwardMessage(chat.id, chat.id, message_id)  
+    break;
+  }
 })
