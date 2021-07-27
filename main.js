@@ -57,6 +57,18 @@ console.log(query.message);
     case 'reply': 
     bot.sendMessage(chat.id, 'my reply', {
       reply_to_message_id: message_id
-    })
+    });
+      break;
+
+    case 'edit': 
+      bot.editMessageText('another text))', {
+        chat_id: chat.id,
+        message_id,
+        reply_markup: { inline_keyboard }
+      })
+      break;
+    case 'delete':
+      bot.deleteMessage(chat.id, message_id);
+      break;
   }
 })
