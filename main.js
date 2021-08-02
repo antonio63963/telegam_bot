@@ -71,4 +71,10 @@ console.log(query.message);
       bot.deleteMessage(chat.id, message_id);
       break;
   }
+});
+
+bot.onText(/\/pic/, msg => {
+  bot.sendPhoto(msg.chat.id, './pics/happyCat.jpg', { 
+    caption: 'mr. cat'
+  })
 })
